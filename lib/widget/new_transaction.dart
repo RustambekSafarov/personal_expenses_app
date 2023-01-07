@@ -42,7 +42,7 @@ class _NewTransactionState extends State<NewTransaction> {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
-              onSubmitted: (_) => submitData,
+              onSubmitted: (_) => submitData(),
               // onChanged: (val) {
               //   titleInput = val;
               // },
@@ -51,7 +51,7 @@ class _NewTransactionState extends State<NewTransaction> {
               decoration: InputDecoration(labelText: 'Amount'),
               keyboardType: TextInputType.number,
               controller: amountController,
-              onSubmitted: (_) => submitData,
+              onSubmitted: (_) => submitData(),
               // onChanged: (val) => amountInput = val,
             ),
             TextButton(
@@ -63,7 +63,6 @@ class _NewTransactionState extends State<NewTransaction> {
                       ? double.parse(amountController.text)
                       : Text('No data!'),
                 );
-                Navigator.of(context).pop();
               },
             ),
           ],
