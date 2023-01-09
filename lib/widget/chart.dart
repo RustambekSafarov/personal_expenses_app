@@ -5,7 +5,7 @@ import 'package:personal_expenses_app/widget/chart_bar.dart';
 import '../models/transaction.dart';
 
 class Chart extends StatelessWidget {
-  final List<Transaction> recentTransactions;
+  final List recentTransactions;
 
   const Chart(this.recentTransactions, {super.key});
 
