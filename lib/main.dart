@@ -20,13 +20,13 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.amber,
           fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
-                titleLarge: TextStyle(
+                titleLarge: const TextStyle(
                   fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
               ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
               titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 18,
@@ -54,17 +54,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return userTransactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
-          Duration(days: 7),
+          const Duration(days: 7),
         ),
       );
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime selectedDate) {
     final newTx = Transactions(
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: selectedDate,
       id: DateTime.now().toString(),
     );
 
@@ -80,10 +81,16 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return GestureDetector(
             onTap: () {},
-            child: NewTransaction(_addNewTransaction),
             behavior: HitTestBehavior.opaque,
+            child: NewTransaction(_addNewTransaction),
           );
         });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -104,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Personal Expanses',
           style: TextStyle(fontFamily: 'OpenSans', fontSize: 20),
         ),
@@ -120,13 +127,13 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(userTransactions),
+            TransactionList(userTransactions, _deleteTransaction),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             print(userTransactions);
             return startAddNewTransaction(context);
