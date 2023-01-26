@@ -24,8 +24,9 @@ class TransactionList extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                    height: 250,
-                    child: Image.asset('assets/images/waiting.png')),
+                  height: 250,
+                  child: Image.asset('assets/images/waiting.png'),
+                ),
               ],
             )
           : ListView.builder(

@@ -7,7 +7,10 @@ import 'package:sqflite/sqflite.dart';
 import 'models/transaction.dart';
 import 'widget/transaction_list.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -109,25 +112,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Personal Expanses',
-          style: TextStyle(fontFamily: 'OpenSans', fontSize: 20),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () => startAddNewTransaction(context),
-              icon: Icon(Icons.add))
-        ],
+    final appBar = AppBar(
+      title: const Text(
+        'Personal Expanses',
+        style: TextStyle(fontFamily: 'OpenSans', fontSize: 20),
       ),
+      actions: [
+        IconButton(
+            onPressed: () => startAddNewTransaction(context),
+            icon: Icon(Icons.add))
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(userTransactions, _deleteTransaction),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.26,
+              child: Chart(_recentTransactions),
+            ),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.7,
+                child: TransactionList(userTransactions, _deleteTransaction)),
           ],
         ),
       ),
